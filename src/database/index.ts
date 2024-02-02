@@ -2,7 +2,9 @@ import mongoose from 'mongoose';
 export const connectDb = async () => {
   try{
        
-    await mongoose.connect("mongodb://127.0.0.1:27017/ProjectManagement",{
+
+    const test="mongodb+srv://felexonyango19:Q1qRnSFLVsQ5Mb5m@cluster0.voshhwm.mongodb.net/?retryWrites=true&w=majority"
+    await mongoose.connect(test,{
         useUnifiedTopology: true,
         useNewUrlParser: true,
         useFindAndModify:false,
