@@ -8,7 +8,7 @@ export const connectDb = async () => {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         useFindAndModify:false,
-        // createIndexes:false
+       
         
        
     })
