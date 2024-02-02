@@ -1,1 +1,1 @@
-Dress shop application build with nodejs typescript  mongodb 
+ application build with nodejs typescript  mongodb 
