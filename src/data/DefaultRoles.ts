@@ -17,5 +17,16 @@ export const DefaultRoles = {
         } catch (err) {
           console.error('Error creating default roles:', err);
         }
-      }
+      },
+
+    //   async  getAllRoles() {
+    //     try {
+    //         const allRoles = await Roles.find();
+    //         console.log(allRoles)
+    //         // return allRoles;
+    //     } catch (err) {
+    //         console.error('Error fetching roles:', err);
+    //         throw err;
+    //     }
+    // }
 }

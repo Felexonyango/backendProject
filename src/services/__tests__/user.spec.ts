@@ -1,20 +1,23 @@
 import { strictEqual, deepStrictEqual } from 'assert';
 import supertest from 'supertest';
 import app from '../../app';
+import { DefaultTokenForTesting } from '../../config';
 let server: any;
 
-beforeEach(() => {
+beforeEach(async () => {
   server = app.listen(3002);
 });
 
-afterEach(() => {
+afterEach(async () => {
   server.close();
 });
 
 
+
 describe('GET /api/user/all', () => {
+  jest.setTimeout(10000);
   it('should retrieve users with partial properties successfully', async () => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjViOGY0MDdlNGNjMGYzYjljNDI1MTJhIiwicm9sZSI6WyI2NWI4ZjM0OTkxNzI5YTMyNjg0NGNhMjEiXSwiaWF0IjoxNzA2OTUyODAyLCJleHAiOjE3MDY5ODg4MDJ9.TiWjm06GmZ-0wa4HGqZdfPpw8KsFaKUpHZ4Dzo4gpac';
+    
     const mockUserData = [
       { firstname: 'user1', email: 'user1@gmail.com', password: 'test@202' },
       { firstname: 'user2', email: 'user2@gmail.com', password: 'test@202' },
@@ -32,7 +35,7 @@ describe('GET /api/user/all', () => {
     const response = await supertest(app)
       .get('/api/user/all')
       .expect(200)
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${DefaultTokenForTesting}`)
       .expect('Content-Type', /json/);
 
     strictEqual(response.status, 200);

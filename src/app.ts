@@ -23,6 +23,7 @@ import { FaqRoutes } from "./routes/faq";
 import multer from "multer";
 
 import { IssuesRoute } from "./routes/issue";
+import { DefaultRoles } from "./data/DefaultRoles";
 const app: Application = express();
 app.use(express.json());
 
@@ -40,8 +41,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 connectDb();
-  // DefaultRoles.createDefaultRoles()
-  ///destroyData()
+  //DefaultRoles.createDefaultRoles()
+  
+  //destroyData()
 
 app.use(cors());
 
@@ -57,10 +59,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
- app.use('/api/issue',IssuesRoute)
+ app.use('/api/ticket',IssuesRoute)
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/workspace", workspaceRoutes);
 app.use('/api/role',roleRoutes)
 app.use('/api/project',projectRoutes)
 app.use("/api/task",TaskRoutes)
@@ -68,7 +69,6 @@ app.use('/api/comment',CommentSRoute)
 app.use("/api/feedback",FeedbackRoute)
 app.use('/api/file', upload.single('file'), FileRoutes)
 app.use("/api/faq",FaqRoutes)
-// app.use("/api/menus",MenuRoutes)
 
 
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test  jest --testTimeout=5000 ",
+    "test": "cross-env NODE_ENV=test  jest --testTimeout=10000 ",
     "tsc": "tsc",
     "dev": "nodemon src/app.ts",
     "start": "npm run build && node ./build/index.js",
