@@ -35,7 +35,7 @@ describe('GET /api/users/all', () => {
    
     expect(require('../../model/user').default.find).toHaveBeenCalledWith({});
 
-    // Restore the original implementation of User.find
+   
     jest.restoreAllMocks();
   });
 });
