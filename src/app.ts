@@ -21,11 +21,8 @@ import { FeedbackRoute } from "./routes/feedback";
 import { FileRoutes } from "./routes/file";
 import { FaqRoutes } from "./routes/faq";
 import multer from "multer";
-import {sendProjectReminder} from './services/project'
-import { sendTaskReminder } from "./services/task";
-import { DefaultRoles } from "./data/DefaultRoles";
+
 import { IssuesRoute } from "./routes/issue";
-// import { MenuRoutes } from "./routes/MenuRoute";
 const app: Application = express();
 app.use(express.json());
 
@@ -45,9 +42,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 connectDb();
   // DefaultRoles.createDefaultRoles()
   ///destroyData()
-let event
-sendProjectReminder(event)
-sendTaskReminder(event)
 
 app.use(cors());
 
