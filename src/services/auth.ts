@@ -7,27 +7,41 @@ import {User,Iuser}from "../model/user";
 
 import passport from "passport";
 import jwt from "jsonwebtoken";
+import { Roles } from "../model/roles";
 
 
-export const sendResponseToken = ({user,res,statusCode}: {
+export const sendResponseToken = async({user,res,statusCode}: {
     user: UserType | Iuser
   statusCode: number;
   res: Response;
 }) => {
-  const payload = {
-  user_id: user._id,
-  role:user.role
+  try{
+    
+    const roleIds = user?.role || [];
+    const roles = await Roles.find({ _id: { $in: roleIds } });
 
+    const payload = {
+      user_id: user?._id,
+      roles: roles.map(role => role.name),
+    };
 
-};
+   
+  
+    const token = jwt.sign(payload, JWT_SECRET_KEY, {
+      expiresIn: 36000
+    });
+    // console.log(token);
+  
+    // remove password from response
+   
+    res.status(statusCode).json({ message:"Successfully logged in user",result:{token}});
 
-  const token = jwt.sign(payload, JWT_SECRET_KEY, {
-    expiresIn: 36000
-  });
+  }
+  catch(err){
+    console.log(err)
 
-  // remove password from response
- 
-  res.status(statusCode).json({ message:"Successfully logged in user",result:{token}});
+  }
+
 };
 
 export const AuthService = {

@@ -7,7 +7,7 @@ export interface Iuser extends Document {
   lastname:string
   email: string;
   password: string
-  role:Roles[]
+  role:Roles[] |any
    
 
   comparePassword(candidatepassword: string): Promise<boolean>;
@@ -43,6 +43,7 @@ const UserSchema: Schema = new Schema(
     role: [{
       type: mongoose.Types.ObjectId,
       ref: "Roles",
+      
       default: [
         ObjectId("644966e4b063a954a811a912"),
       ]
