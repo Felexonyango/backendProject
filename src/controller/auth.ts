@@ -6,6 +6,8 @@ import { AuthService } from "../services/auth";
         AuthService.login(req, res,next);
       },
 
+
+      
   signUp(req: Request, res: Response, next:NextFunction) {
     AuthService.signUp(req, res,next);
   },
