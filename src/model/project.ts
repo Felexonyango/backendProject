@@ -9,8 +9,7 @@ export interface projectDocument extends Document {
   startDate: Date;
   endDate: Date
   status: Status;
-  assignedTo: ObjectId | any;
-  workspace: ObjectId;
+  assignedTo: ObjectId | any
   priority: Ipriority;
 
   percentageCompleted: number;
