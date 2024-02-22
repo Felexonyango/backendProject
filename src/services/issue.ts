@@ -2,22 +2,22 @@ import { Request, Response, NextFunction } from "express";
 import { User as UserType } from "../types/user";
 
 import { User } from "../model/user";
-import mongoose from "mongoose";
+import mongoose, { FilterQuery, Types } from "mongoose";
 import { Project } from "../model/project";
 import { Ipriority, Status } from "../types";
-import { Issue } from "../model/Issue";
+import { Issue, IssueDocument } from "../model/Issue";
 
 
 export const IssueService = {
   async CreateIssue(req: Request, res: Response, next: NextFunction) {
     try {
 
-      let { title, status ,description, dueDate,project,priority } = req.body;
-      const checkExisting = await Issue.findOne({ name });
+      let { title ,description, dueDate,project } = req.body;
+      const checkExisting = await Issue.findOne({ title });
       if (checkExisting) {
         return res
           .status(400)
-          .json({ msg: "Issue with that name already exists" });
+          .json({ msg: "Ticket  with that name already exists" });
       } else {
         const user = req.user as UserType;
         let projects;
@@ -51,25 +51,28 @@ export const IssueService = {
     next();
   },
 
-  async getIssuesAssignedTOme(req: Request, res: Response, next: NextFunction) {
+  async getIssuesAssignedToMe(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = req.user as UserType 
-
-      const result  = await Issue.findById({
-        assignedTo: mongoose.Types.ObjectId(user?._id)
+      const user = req.user as UserType;
+  
+      const result = await Issue.find({
+        assignedTo: user?._id as FilterQuery<IssueDocument>['assignedTo']
       })
         .populate("assignedTo", "-password")
         .sort({ createdAt: -1 });
-
-      if (result)
-        return res
-          .status(200)
-          .json({ message: "Issue retrieved successfully", result });
+  
+      if (result.length > 0) {
+        return res.status(200).json({ message: "Issues retrieved successfully", result });
+      } else {
+        return res.status(404).json({ message: "No issues found for the user" });
+      }
     } catch (err) {
-      res.status(500).json({ error: err });
+      console.log(err);
+      res.status(500).json({ error:err});
     }
     next();
   },
+  
   async getAllIssues(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await Issue.find({})

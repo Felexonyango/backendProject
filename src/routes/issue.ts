@@ -11,7 +11,6 @@ import {
 import { Role } from "../types";
 
 const router = Router();
-
 /**
  * @openapi
  * /api/ticket/create:
@@ -31,7 +30,8 @@ const router = Router();
  *               - description
  *               - startDate
  *               - endDate
- *               - dueDate  # Correct indentation here
+ *               - dueDate  
+ *               - project
  *             properties:
  *               title:
  *                 type: string
@@ -40,11 +40,13 @@ const router = Router();
  *                 type: string
  *                 default: test yes
  *               startDate:
- *                 type: string
+ *                 type: string  
  *               endDate:
- *                 type: string
+ *                 type: string  
  *               dueDate:
- *                 type: string  # Correct indentation here
+ *                 type: string  
+ *               project:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Created
