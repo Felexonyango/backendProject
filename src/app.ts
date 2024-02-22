@@ -72,10 +72,10 @@ const upload = multer({ storage });
 
 
 app.use("/api/auth", authRoutes);
+app.use('/api/project',projectRoutes)
 app.use("/api/user", userRoutes);
 app.use('/api/ticket',IssuesRoute)
 app.use('/api/role',roleRoutes)
-app.use('/api/project',projectRoutes)
 app.use("/api/task",TaskRoutes)
 app.use('/api/comment',CommentSRoute)
 app.use("/api/feedback",FeedbackRoute)

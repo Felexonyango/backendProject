@@ -7,9 +7,7 @@ export interface projectDocument extends Document {
   title: string;
   description: string;
   startDate: Date;
-  endDate: Date;
-
-  projectduration?: number;
+  endDate: Date
   status: Status;
   assignedTo: ObjectId | any;
   workspace: ObjectId;

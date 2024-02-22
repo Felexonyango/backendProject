@@ -17,7 +17,6 @@ export const ProjectService = {
         description,
         startDate,
         endDate,
-         status
       } = req.body;
       const checkExisting = await Project.findOne({ title: title });
       if (checkExisting) {

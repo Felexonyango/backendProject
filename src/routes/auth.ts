@@ -1,23 +1,24 @@
 import { Router } from 'express';
 
-import { authorize, protect } from "../middleware/auth"
-import {
-  validate,
-  loginValidation,
-  signUpValidation,
-  changePasswordValidation,
-} from "../validation/index"
-import { Role } from '../types';
+import { validate, loginValidation, signUpValidation, changePasswordValidation } from '../validation/index';
 import { changedPassword, login, signUp } from '../controller/auth';
 
 const router = Router();
+
+/**
+ * @openapi
+ * tags:
+ *   name: auth
+ *   description: Authentication APIs
+ */
+
 /**
  * @openapi
  * /api/auth/signUp:
  *   post:
  *     tags:
- *       - SignUp
- *     summary: create a  user
+ *       - auth
+ *     summary: Create a user
  *     requestBody:
  *       required: true
  *       content:
@@ -26,7 +27,7 @@ const router = Router();
  *             type: object
  *             required:
  *               - firstname
- *                - lastname
+ *               - lastname
  *               - email
  *               - password
  *             properties:
@@ -35,7 +36,7 @@ const router = Router();
  *                 default: john
  *               lastname:
  *                 type: string
- *                 default:  doe
+ *                 default: doe
  *               email:
  *                 type: string
  *                 default: johndoe@mail.com
@@ -51,13 +52,14 @@ const router = Router();
  *         description: Server Error
  */
 router.route('/signUp').post(signUpValidation(), validate, signUp);
+
 /**
  * @openapi
  * /api/auth/login:
  *   post:
  *     tags:
- *       - login
- *     summary: login  user
+ *       - auth
+ *     summary: Login a user
  *     requestBody:
  *       required: true
  *       content:
@@ -65,11 +67,9 @@ router.route('/signUp').post(signUpValidation(), validate, signUp);
  *           schema:
  *             type: object
  *             required:
- *               - username
  *               - email
  *               - password
  *             properties:
- *               
  *               email:
  *                 type: string
  *                 default: johndoe@mail.com
@@ -84,7 +84,6 @@ router.route('/signUp').post(signUpValidation(), validate, signUp);
  *       500:
  *         description: Server Error
  */
-
 router.route('/login').post(loginValidation(), validate, login);
 
 /**
@@ -92,8 +91,8 @@ router.route('/login').post(loginValidation(), validate, login);
  * /api/auth/change-password:
  *   post:
  *     tags:
- *       - change-password
- *     summary: change password
+ *       - auth
+ *     summary: Change password
  *     requestBody:
  *       required: true
  *       content:
@@ -101,11 +100,9 @@ router.route('/login').post(loginValidation(), validate, login);
  *           schema:
  *             type: object
  *             required:
- *               - username
  *               - email
  *               - password
  *             properties:
- *               
  *               email:
  *                 type: string
  *                 default: johndoe@mail.com
@@ -120,10 +117,6 @@ router.route('/login').post(loginValidation(), validate, login);
  *       500:
  *         description: Server Error
  */
-
-
-router
-  .route('/change-password')
-  .patch(changePasswordValidation(), validate, changedPassword);
+router.route('/change-password').patch(changePasswordValidation(), validate, changedPassword);
 
 export { router as authRoutes };

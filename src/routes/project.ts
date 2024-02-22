@@ -20,6 +20,45 @@ import {
 import { ProjectService } from "../services/project";
 import { Request, Response, NextFunction } from "express";
 const router = Router();
+/**
+ * @openapi
+ * /api/project/create:
+ *   post:
+ *     tags:
+ *       - create
+ *     summary: Create project
+ *     security:
+ *       - bearerAuth: []   
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - description
+ *               - startDate
+ *               - endDate
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 default: test
+ *               description:
+ *                 type: string
+ *                 default: test yes
+ *               startDate:
+ *                 type: string
+ *               endDate:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
 
 router
   .route("/create")
