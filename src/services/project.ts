@@ -6,52 +6,37 @@ import { Project } from "../model/project";
 import mongoose from "mongoose";
 import { Status } from "../types/project";
 import { User } from "../model/user";
-import { Workspace, workspaceDocument } from "../model/workspace";
+import { Workspace } from "../model/workspace";
 import { Task } from "../model/task";
 
 export const ProjectService = {
   async CreateProject(req: Request, res: Response, next: NextFunction) {
     try {
       let {
-        projectName,
+        title,
         description,
         startDate,
         endDate,
-        projectduration,
-        budget,
-        isContractive,
-        workspace,
-        dueDate,
+         status
       } = req.body;
-      const checkExisting = await Project.findOne({ projectName: projectName });
+      const checkExisting = await Project.findOne({ title: title });
       if (checkExisting) {
         return res
           .status(400)
           .json({ msg: "Project with that name already exists" });
       } else {
         const user = req.user as UserType;
-        let workspaceObj;
-        if (workspace) {
-          workspaceObj = await Workspace.findById(workspace);
-          
-        } 
-        else{
-           return res.status(404).json({ msg: "Workspace not found" });
-        }
+       
         
   
         let project = await Project.create({
-          projectName,
+          title,
           description,
           startDate,
           endDate,
-          isContractive,
-          dueDate,
-          budget,
-          projectduration,
           status: Status.NOTSTARTED,
           user: user?._id,
-          workspace: workspaceObj?._id,
+         
         });
         let result = await project.save();
   
@@ -209,7 +194,7 @@ export const ProjectService = {
           from: "devconnector254@gmail.com",
            to: user.email,
           subject: `Reminder: Project Asssignment`,
-          text: `Project "${project.projectName}"  has been assigned to you  Please confirm .`,
+          text: `Project "${project.title}"  has been assigned to you  Please confirm .`,
         };
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
@@ -490,8 +475,8 @@ function SendprojectDueDatesReminders(req: Request) {
         const mailOptions = {
           from: "devconnector254@gmail.com",
           to: user.email,
-          subject: `Reminder: Project "${project.projectName}" is due soon`,
-          text: `Project "${project.projectName}" is due on ${project.dueDate}. Please complete it before then.`,
+          subject: `Reminder: Project "${project.title}" is due soon`,
+          text: `Project "${project.title}" is due on ${project.endDate}. Please complete it before then.`,
         };
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {

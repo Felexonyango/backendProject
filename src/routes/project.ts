@@ -20,7 +20,6 @@ import {
 import { ProjectService } from "../services/project";
 import { Request, Response, NextFunction } from "express";
 const router = Router();
-//Admin Routes 
 
 router
   .route("/create")
