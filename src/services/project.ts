@@ -54,9 +54,9 @@ export const ProjectService = {
   
   async getAllProjects(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log('test here')
       const result = await Project.find({})
         .populate("assignedTo", "-password")
-        .populate("task")
         .populate("user", "-password")
         .sort({ createdAt: -1 })
         .exec();
@@ -78,7 +78,7 @@ export const ProjectService = {
       const user = req.user as UserType;
 
       const result = await Project.find({
-        assignedTo: mongoose.Types.ObjectId(user._id),
+        assignedTo: mongoose.Types.ObjectId(user?._id),
       })
         .populate("assignedTo", "-password")
         .sort({ createdAt: -1 });
@@ -178,34 +178,8 @@ export const ProjectService = {
       const user = await User.findById(userId);
       if (user) {
         project.assignedTo = user._id;
-      const result = await project.save();
-      if (result) {
-        let PASSWORD = "nwfbopmzfxclbkup";
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          secure: false,
-          auth: {
-            user: "devconnector254@gmail.com",
-            pass: `${PASSWORD}`,
-          },
-        });
-        const mailOptions = {
-          from: "devconnector254@gmail.com",
-           to: user.email,
-          subject: `Reminder: Project Asssignment`,
-          text: `Project "${project.title}"  has been assigned to you  Please confirm .`,
-        };
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error(error);
-          } else {
-            console.log("Email sent: " + info.response);
-          }
-        });
-        console.log("Email sent");
-      } else {
-        console.log("email not sent");
-      }
+      await project.save();
+    
     }
     } catch (error) {
       console.log(error);

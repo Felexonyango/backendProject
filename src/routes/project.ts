@@ -7,25 +7,25 @@ import {
   UpdateProject,
   deleteProject,
   getAllProject,
-  getAllProjectsByWorkspaceById,
   getProjectById,
   getAllProjectsAssigneTome,
-  getAllCompletedProject,
-  getAllOngoingProjects,
-  getAllOnholdProjects,
-  getAllPendingProjects,
-  updateProjectPercentage,
-  getAllUsersProject,
+
 } from "../controller/Project";
 import { ProjectService } from "../services/project";
 import { Request, Response, NextFunction } from "express";
 const router = Router();
 /**
  * @openapi
+ * tags:
+ *   name: Project
+ *   
+ */
+/**
+ * @openapi
  * /api/project/create:
  *   post:
  *     tags:
- *       - create
+ *       - Project
  *     summary: Create project
  *     security:
  *       - bearerAuth: []   
@@ -64,16 +64,78 @@ router
   .route("/create")
   .post(
     protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER, Role.USER]),
+    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
     CreateProject
   );
+
+/**
+ * @openapi
+ * /api/project/all:
+ *   get:
+ *     tags:
+ *       - Project
+ *     summary: Get projects
+ *     security:
+ *       - bearerAuth: []   
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             example:
+ *               - projectId: 1
+ *                 title: Project 1
+ *                 description: Project 1 description
+ *                 startDate: 2022-03-01
+ *                 endDate: 2022-03-31
+ *               - projectId: 2
+ *                 title: Project 2
+ *                 description: Project 2 description
+ *                 startDate: 2022-04-01
+ *                 endDate: 2022-04-30
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
+
 router
   .route("/all")
   .get(
     protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
+    authorize([Role.SYSADMIN]),
     getAllProject
   );
+
+  /**
+ * @openapi
+ * api/project/all/myprojects:
+ *   get:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             example:
+ *               - projectId: 1
+ *                 title: Project 1
+ *                 description: Project 1 description
+ *                 startDate: 2022-03-01
+ *                 endDate: 2022-03-31
+ *               - projectId: 2
+ *                 title: Project 2
+ *                 description: Project 2 description
+ *                 startDate: 2022-04-01
+ *                 endDate: 2022-04-30
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
 router
   .route("/all/myprojects")
   .get(
@@ -81,42 +143,32 @@ router
     authorize([Role.SYSADMIN, Role.PROJECTMANAGER, Role.USER]),
     getAllProjectsAssigneTome
   );
-router
-  .route("all/completed")
-  .get(
-    protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
-    getAllCompletedProject
-  );
-router
-  .route("/all/onhold")
-  .get(
-    protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
-    getAllOnholdProjects
-  );
-router
-  .route("/all/ongoing")
-  .get(
-    protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
-    getAllOngoingProjects
-  );
-router
-  .route("/all/pending")
-  .get(
-    protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
-    getAllPendingProjects
-  );
 
-router
-  .route("/workspace/all/:workspaceId")
-  .get(
-    protect,
-    authorize([Role.SYSADMIN,Role.PROJECTMANAGER]),
-    getAllProjectsByWorkspaceById
-  );
+  /**
+ * @openapi
+ * api/project/{id}:
+ *   get:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             example:
+ *               - projectId: 1
+ *                 title: Project 1
+ *                 description: Project 1 description
+ *                 startDate: 2022-03-01
+ *                 endDate: 2022-03-31
+ *              
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
 router
   .route("/:id")
   .get(
@@ -124,6 +176,31 @@ router
     authorize([Role.SYSADMIN, Role.USER, Role.PROJECTMANAGER]),
     getProjectById
   );
+    /**
+ * @openapi
+ * api/project/{id}:
+ *   delete:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             example:
+ *               - projectId: 1
+ *                 title: Project 1
+ *                 description: Project 1 description
+ *                 startDate: 2022-03-01
+ *                 endDate: 2022-03-31
+ *              
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
 router
   .route("/:id")
   .delete(
@@ -131,6 +208,45 @@ router
     authorize([Role.SYSADMIN, Role.PROJECTMANAGER, Role.USER]),
     deleteProject
   );
+  /**
+ * @openapi
+ * /api/project/{id}:
+ *   patch:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - description
+ *               - startDate
+ *               - endDate
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 default: test
+ *               description:
+ *                 type: string
+ *                 default: test yes
+ *               startDate:
+ *                 type: string
+ *               endDate:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
+
 router
   .route("/:id")
   .patch(
@@ -138,6 +254,44 @@ router
     authorize([Role.SYSADMIN, Role.PROJECTMANAGER, Role.USER]),
     UpdateProject
   );
+    /**
+ * @openapi
+ * /api/project/assignTo/{id}:
+ *   patch:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - description
+ *               - startDate
+ *               - endDate
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 default: test
+ *               description:
+ *                 type: string
+ *                 default: test yes
+ *               startDate:
+ *                 type: string
+ *               endDate:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Created
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
   router
   .route("/assignTo/:id")
   .patch(
@@ -145,18 +299,28 @@ router
     authorize([Role.SYSADMIN, Role.PROJECTMANAGER, Role.USER]),
     AssignProject
   );
-router
-  .route("/id")
-  .patch(protect, authorize([Role.SYSADMIN,Role.PROJECTMANAGER]), AssignProject);
-router
-  .route("/updatePercentage/:id")
-  .patch(
-    protect,
-    authorize([Role.SYSADMIN, Role.PROJECTMANAGER]),
-    updateProjectPercentage
-  );
-  router.route('/api/projects/users').get(protect,authorize([Role.USER]), getAllUsersProject)
 
+
+ /**
+ * @openapi
+ * api/project/dashboard/totals:
+ *   get:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ 
+ *              
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
   router.get("/dashboard/totals", protect, authorize([Role.SYSADMIN,Role.PROJECTMANAGER]), async (req:Request, res:Response,next:NextFunction) => {
     try {
       const result = await ProjectService.dashboardSummary(req,res,next);
@@ -166,7 +330,26 @@ router
     }
     next()
   });
-
+ /**
+ * @openapi
+ * api/project/dashboard/user/totals:
+ *   get:
+ *     tags:
+ *       - Project
+ *     security:
+ *       - bearerAuth: []   
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ 
+ *              
+ *       404:
+ *         description: Not Found
+ *       500:
+ *         description: Server Error
+ */
   router.get("/dashboard/user/totals", protect, authorize([Role.USER]), async (req:Request, res:Response,next:NextFunction) => {
     try {
       const result = await ProjectService.getUserDashboardSummary(req,res,next);

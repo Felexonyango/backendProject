@@ -2,6 +2,14 @@ import mongoose, { Model, Schema, Document, Types } from "mongoose";
 import bcrypt from "bcryptjs";
 import { Role, Roles } from "../types/role";
 const { ObjectId } = mongoose.Types;
+
+export interface UserInput {
+  firstname: string;
+  lastname:string
+  email: string;
+  password: string
+ 
+}
 export interface Iuser extends Document {
   firstname: string;
   lastname:string
