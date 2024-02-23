@@ -40,8 +40,7 @@ app.use((req:Request, res:Response, next:NextFunction) => {
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
 
-  res.setHeader("Content-Security-Policy", "default-src 'none'; img-src 'self' data:");
-
+ 
   next();
 });
 
