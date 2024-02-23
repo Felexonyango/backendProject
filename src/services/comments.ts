@@ -1,30 +1,54 @@
-import { Request, Response, NextFunction, response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { User as UserType } from "../types/user";
-import { IComments as CommentType } from "../types/comment";
+import { Comment, TaskComment, ProjectComment, IssueComment } from "../model/comment"; 
 
-import { Comment } from "../model/comment";
 import { Project } from "../model/project";
+import { CommentType } from "../types/comment";
 export const CommentService = {
   async CreateComment(req: Request, res: Response, next: NextFunction) {
     try {
-      let { comment } = req.body;
+      const { comment, type, task,project,issue } = req.body;
       const user = req.user as UserType;
-      const { projectId } = req.params;
-      const project = await Project.findById(projectId);
-
-      let comments = await Comment.create({
-        comment,
-        commentedBy: user?._id,
-        project: project?._id,
-      });
+  
+      let comments;
+  
+      switch (type) {
+        case CommentType.TASKCOMMENT:
+          comments = await TaskComment.create({
+            comment,
+            type,
+            commentedBy: user?._id,
+            task,
+          });
+          break;
+        case CommentType.PROJECTCOMMENT:
+          comments = await ProjectComment.create({
+            comment,
+            type,
+            commentedBy: user?._id,
+            project
+          });
+          break;
+        case CommentType.TICKETCOMMENT:
+          comments = await IssueComment.create({
+            comment,
+            type,
+            commentedBy: user?._id,
+            issue
+          });
+          break;
+        default:
+          return res.status(400).json({ error: 'Invalid comment type' });
+      }
+  
       let result = await comments.save();
-
-      if (result)
-        return res
-          .status(200)
-          .json({ msg: "Successfully created comment", result });
+  
+      if (result) {
+        return res.status(200).json({ msg: "Successfully created comment", result });
+      }
     } catch (err) {
-      res.status(500).json({ error: err });
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
   async getAllCommentsByProjectId(

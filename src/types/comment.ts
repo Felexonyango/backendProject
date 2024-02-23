@@ -3,3 +3,10 @@ export interface IComments{
     comments:string
     commentedBy:string
 }
+export enum CommentType {
+    TICKETCOMMENT='TICKETCOMMENT',
+    TASKCOMMENT='TASKCOMMENT',
+    PROJECTCOMMENT='PROJECTCOMMENT'
+
+
+}
