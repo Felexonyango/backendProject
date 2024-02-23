@@ -30,7 +30,7 @@ const options = {
         description: "Local server",
       },
       {
-        url: "<your live url here>",
+        url: "https://backend-project-ww9p.vercel.app/",
         description: "Live server",
       },
     ],
