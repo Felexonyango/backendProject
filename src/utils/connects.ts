@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-// import { DB } from '../config';
+import { DB } from '../config';
 export const connectDb = async () => {
   try{
        
 
     
-    const DB ="mongodb://127.0.0.1:27017/ProjectManagement"
+    //const DB ="mongodb://127.0.0.1:27017/ProjectManagement"
     await mongoose.connect(DB,{
         useUnifiedTopology: true,
         useNewUrlParser: true,
