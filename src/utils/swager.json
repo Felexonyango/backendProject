@@ -1,0 +1,1500 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Ticket Management  API",
+      "version": "1.0.0"
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "servers": [
+      {
+        "url": "http://localhost:3001/",
+        "description": "Local server"
+      },
+      {
+        "url": "https://backend-project-ww9p.vercel.app/",
+        "description": "Live server"
+      }
+    ],
+    "paths": {
+      "/api/auth/signUp": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Create a user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "firstname",
+                    "lastname",
+                    "email",
+                    "password"
+                  ],
+                  "properties": {
+                    "firstname": {
+                      "type": "string",
+                      "default": "john"
+                    },
+                    "lastname": {
+                      "type": "string",
+                      "default": "doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "default": "johndoe@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "default": "johnDoe20!@"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/auth/login": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Login a user",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "email",
+                    "password"
+                  ],
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "default": "johndoe@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "default": "johnDoe20!@"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/auth/change-password": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Change password",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "email",
+                    "password"
+                  ],
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "default": "johndoe@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "default": "johnDoe20!@"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/comment/create": {
+        "post": {
+          "tags": [
+            "Comment"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "comment",
+                    "type"
+                  ],
+                  "properties": {
+                    "comment": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "type": {
+                      "type": "string",
+                      "default": "PROJECTCOMMENT"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/comment/all/{moduleId}": {
+        "get": {
+          "tags": [
+            "Comment"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/comment/{id}": {
+        "get": {
+          "tags": [
+            "Comment"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Comment"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Comment"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/feedback/create": {
+        "post": {
+          "tags": [
+            "Feedback"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "raisedBy"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "raisedBy": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/feedback/all": {
+        "post": {
+          "tags": [
+            "Feedback"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": null
+            }
+          }
+        }
+      },
+      "/api/feedback/{id}": {
+        "get": {
+          "tags": [
+            "Feedback"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": null
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Feedback"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": null
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Feedback"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": null
+            }
+          }
+        }
+      },
+      "/api/ticket/create": {
+        "post": {
+          "tags": [
+            "Ticket"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "startDate",
+                    "endDate",
+                    "dueDate",
+                    "project"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "dueDate": {
+                      "type": "string"
+                    },
+                    "project": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/ticket/all": {
+        "get": {
+          "tags": [
+            "Ticket"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "title": "ticketId 1",
+                      "description": "ticketId 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    },
+                    {
+                      "ticketId": 2,
+                      "title": "ticketId 2",
+                      "description": "ticketId 2 description",
+                      "startDate": "2022-04-01",
+                      "endDate": "2022-04-30"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/ticket/mine": {
+        "get": {
+          "tags": [
+            "Ticket"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "title": "ticketId 1",
+                      "description": "ticketId 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    },
+                    {
+                      "ticketId": 2,
+                      "title": "ticketId 2",
+                      "description": "ticketId 2 description",
+                      "startDate": "2022-04-01",
+                      "endDate": "2022-04-30"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/ticket/{id}": {
+        "delete": {
+          "tags": [
+            "Ticket"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "title": "ticket 1",
+                      "description": "ticket 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/ticket/{id}": {
+        "patch": {
+          "tags": [
+            "Ticket"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "startDate",
+                    "endDate"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/project/create": {
+        "post": {
+          "tags": [
+            "Project"
+          ],
+          "summary": "Create project",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "startDate",
+                    "endDate"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/project/all": {
+        "get": {
+          "tags": [
+            "Project"
+          ],
+          "summary": "Get projects",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "projectId": 1,
+                      "title": "Project 1",
+                      "description": "Project 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    },
+                    {
+                      "projectId": 2,
+                      "title": "Project 2",
+                      "description": "Project 2 description",
+                      "startDate": "2022-04-01",
+                      "endDate": "2022-04-30"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/project/all/myprojects": {
+        "get": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "projectId": 1,
+                      "title": "Project 1",
+                      "description": "Project 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    },
+                    {
+                      "projectId": 2,
+                      "title": "Project 2",
+                      "description": "Project 2 description",
+                      "startDate": "2022-04-01",
+                      "endDate": "2022-04-30"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/project/{id}": {
+        "get": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "projectId": 1,
+                      "title": "Project 1",
+                      "description": "Project 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "projectId": 1,
+                      "title": "Project 1",
+                      "description": "Project 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/project/{id}": {
+        "patch": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "startDate",
+                    "endDate"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/project/assignTo/{id}": {
+        "patch": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "startDate",
+                    "endDate"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/project/dashboard/totals": {
+        "get": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/project/dashboard/user/totals": {
+        "get": {
+          "tags": [
+            "Project"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/task/create/{ticketId}": {
+        "post": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "description",
+                    "startDate",
+                    "endDate",
+                    "dueDate",
+                    "issue"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "default": "test"
+                    },
+                    "description": {
+                      "type": "string",
+                      "default": "test yes"
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "dueDate": {
+                      "type": "string"
+                    },
+                    "issue": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/task/all/mytask": {
+        "get": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "task": "ticketId 1",
+                      "description": "ticketId 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/task/all": {
+        "get": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "task": "ticketId 1",
+                      "description": "ticketId 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/task/{id}": {
+        "get": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "task": 1,
+                      "title": "task 1",
+                      "description": "titaskket 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "title": "ticket 1",
+                      "description": "ticket 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "title": "ticket 1",
+                      "description": "ticket 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "api/task/assignTo{id}": {
+        "patch": {
+          "tags": [
+            "Task"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "ticketId": 1,
+                      "title": "ticket 1",
+                      "description": "ticket 1 description",
+                      "startDate": "2022-03-01",
+                      "endDate": "2022-03-31"
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/user/all": {
+        "get": {
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/user/{id}": {
+        "get": {
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "patch": {
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/user/assign/{id}": {
+        "patch": {
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/api/user/unassign/{id}": {
+        "patch": {
+          "tags": [
+            "User"
+          ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": null
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "get"
+      },
+      "404": {
+        "description": "Not Found"
+      },
+      "500": {
+        "description": "Server Error"
+      }
+    },
+    "tags": [
+      {
+        "name": "auth",
+        "description": "Authentication APIs"
+      },
+      {
+        "name": "Project"
+      }
+    ]
+  }
