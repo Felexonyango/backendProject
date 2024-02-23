@@ -51,32 +51,36 @@ export const CommentService = {
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
-  async getAllCommentsByProjectId(
+  async getAllCommentsByModuleId(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const { projectId } = req.params;
-      let project = await Project.findById(projectId);
-      if (project) {
-        const result = await Comment.find({ project: project.id }).populate(
-          "commentedBy","-password"
-        );
-
-        if (result)
-          return res.status(200).json({
-            message: `Comments for ${projectId} retrieved successfully`,
-            result,
-          });
+      const { moduleId } = req.params; 
+  
+      const result = await Comment.find({
+        $or: [
+          { task: moduleId, __t: "TaskComment" },
+          { issue: moduleId, __t: "IssueComment" },
+          { project: moduleId, __t: "ProjectComment" },
+        ],
+      }).populate("commentedBy", "-password");
+  
+      if (result.length > 0) {
+        return res.status(200).json({
+          message: `Comments for module ${moduleId} retrieved successfully`,
+          result,
+        });
       } else {
         return res.status(404).json({ message: "Comments not found" });
       }
     } catch (err) {
-      res.status(500).json({ error: err });
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-    next();
-  },
+  }
+  ,
 
   async getCommentById(req: Request, res: Response, next: NextFunction) {
     try {

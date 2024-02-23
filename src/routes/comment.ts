@@ -5,7 +5,7 @@ import { UpdateComment, createComment, deleteComment, getAllCommentsByProjectId,
 
 const router = Router();
 router.route('/create').post(protect,authorize([Role.SYSADMIN,Role.PROJECTMANAGER,Role.USER]),createComment)
-router.route('/all').get(protect, authorize([Role.SYSADMIN,Role.PROJECTMANAGER,Role.USER]), getAllCommentsByProjectId)
+router.route('/all/:moduleId').get(protect, authorize([Role.SYSADMIN,Role.PROJECTMANAGER,Role.USER]), getAllCommentsByProjectId)
 router.route('/:commentId').get(protect,authorize([Role.SYSADMIN,Role.PROJECTMANAGER,Role.USER]), getCommentById);
 router.route('/:commentId').delete(protect,authorize([Role.SYSADMIN,Role.PROJECTMANAGER,Role.USER]), deleteComment);
 router.route('/:commentId').patch(protect,authorize([Role.SYSADMIN,Role.PROJECTMANAGER,Role.USER]), UpdateComment);
