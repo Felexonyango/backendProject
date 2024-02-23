@@ -7,7 +7,7 @@ const CommentController = {
   },
 
   getAllCommentsByProjectId(req: Request, res: Response, next: NextFunction) {
-    CommentService.getAllCommentsByProjectId(req, res, next);
+    CommentService.getAllCommentsByModuleId(req, res, next);
   },
  
   UpdateComment(req: Request, res: Response, next: NextFunction) {

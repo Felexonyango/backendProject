@@ -12,7 +12,7 @@ export interface taskDocument extends Document {
   description:string,
   priority:Ipriority,
   assignedTo: ObjectId|any
-  project: ObjectId;
+  Issue: ObjectId;
 }
 
 const taskSChema = new Schema(
@@ -56,9 +56,9 @@ const taskSChema = new Schema(
       type: ObjectId,
       ref: "User",
     },
-    project: {
+    issue: {
       type: ObjectId,
-      ref: "Project",
+      ref: "Issue",
     },
   },
 

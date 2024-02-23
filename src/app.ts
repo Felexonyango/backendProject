@@ -12,18 +12,19 @@ require("./lib/passport")(passport);
 import { authRoutes } from "./routes/auth";
 import { userRoutes } from "./routes/user";
 import { workspaceRoutes } from "./routes/workspace";
-import { connectDb } from "./database";
 import { roleRoutes } from "./routes/role";
 import { projectRoutes } from "./routes/project";
 import { TaskRoutes } from "./routes/task";
 import { CommentSRoute } from "./routes/comment";
 import { FeedbackRoute } from "./routes/feedback";
 import { FileRoutes } from "./routes/file";
-import { FaqRoutes } from "./routes/faq";
 import multer from "multer";
 
 import { IssuesRoute } from "./routes/issue";
 import { DefaultRoles } from "./data/DefaultRoles";
+import swaggerDocs from "./utils/swagger";
+
+import { connectDb } from "./utils/connects";
 const app: Application = express();
 app.use(express.json());
 
@@ -40,9 +41,18 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-connectDb();
-  //DefaultRoles.createDefaultRoles()
-  
+const startServer = async () => {
+  try {
+    await connectDb();
+    app.listen(PORT, () => {
+      console.log(`Server connected to http://localhost:${PORT}`);
+    });
+    swaggerDocs(app, PORT);
+  } catch (error) {
+    console.log('Cannot connect to the server:', error);
+  }
+};
+
   //destroyData()
 
 app.use(cors());
@@ -59,23 +69,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
- app.use('/api/ticket',IssuesRoute)
+
 app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use('/api/role',roleRoutes)
 app.use('/api/project',projectRoutes)
+app.use("/api/user", userRoutes);
+app.use('/api/ticket',IssuesRoute)
+app.use('/api/role',roleRoutes)
 app.use("/api/task",TaskRoutes)
 app.use('/api/comment',CommentSRoute)
 app.use("/api/feedback",FeedbackRoute)
 app.use('/api/file', upload.single('file'), FileRoutes)
-app.use("/api/faq",FaqRoutes)
 
 
 
 //updated body-parser for ts node
 app.use(express.json());
-app.listen(PORT, () => {
-  
-  console.log(`server is listening at port ${PORT}`)
-})
+startServer()
+
 export default app

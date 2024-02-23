@@ -1,28 +1,24 @@
 import { Ipriority } from "../types";
-import {Status } from "../types/project";
+import { Status } from "../types/project";
 import mongoose, { Schema, model, Document, ObjectId } from "mongoose";
 const { ObjectId } = Schema.Types;
 
 export interface projectDocument extends Document {
- 
-  projectName: string;
+  title: string;
   description: string;
   startDate: Date;
-  endDate: Date;
-  dueDate: Date;
-  projectduration?: number;
+  endDate: Date
   status: Status;
-  assignedTo:ObjectId |any;
-  workspace:ObjectId
-  priority:Ipriority,
-  isContractive:boolean
+  assignedTo: ObjectId | any
+  priority: Ipriority;
+
   percentageCompleted: number;
   percentagePending: number;
 }
 
 const ProjectSchma = new Schema(
   {
-    projectName: {
+    title: {
       type: String,
       required: false,
     },
@@ -30,10 +26,7 @@ const ProjectSchma = new Schema(
       type: String,
       required: false,
     },
-    dueDate:{
-      type: Date,
-      required: false,
-    },
+
     startDate: {
       type: Date,
       required: false,
@@ -43,48 +36,33 @@ const ProjectSchma = new Schema(
       type: Date,
       required: false,
     },
-    projectduration: {
-      type: Number,
-      required: false,
-    },
+
     status: {
       type: String,
-      default:Status.NOTSTARTED
+      default: Status.NOTSTARTED,
     },
     user: {
       type: ObjectId,
       ref: "User",
-      require:false
+      require: false,
     },
-    assignedTo:{
+    assignedTo: {
       type: ObjectId,
       ref: "User",
     },
-    workspace:{
-      type:ObjectId,
-      ref: "Workspace",
 
-    },
-    budget:{
-      type:Number,
-    },
-    percentageCompleted: { 
+    percentageCompleted: {
       type: Number,
-       default: 0 
-      },
-    percentagePending: { 
-      type: Number, default: 0
-     },
-     priority:{
-      type:String,
-      default:Ipriority.NONE
+      default: 0,
     },
-    isContractive:{
-      type:Boolean,
-      default:false
-
+    percentagePending: {
+      type: Number,
+      default: 0,
     },
- 
+    priority: {
+      type: String,
+      default: Ipriority.NONE,
+    },
   },
 
   {

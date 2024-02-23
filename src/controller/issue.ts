@@ -10,7 +10,7 @@ const IssueController = {
     IssueService.getAllIssues(req, res, next);
   },
   getAllIssuesAssigneTome(req: Request, res: Response, next: NextFunction) {
-    IssueService.getIssuesAssignedTOme(req, res, next);
+    IssueService.getIssuesAssignedToMe(req, res, next);
   },
 
   UpdateIssue(req: Request, res: Response, next: NextFunction) {

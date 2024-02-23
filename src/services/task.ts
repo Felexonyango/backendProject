@@ -7,10 +7,11 @@ import { Project } from "../model/project";
 import { Ipriority, Status } from "../types";
 import nodemailer from "nodemailer";
 import cron from "node-cron";
+import { Issue } from "../model/Issue";
 export const TaskService = {
   async CreateTask(req: Request, res: Response, next: NextFunction) {
     try {
-      let { name, dueDate, startDate,description,  endDate,project } = req.body;
+      let { name, dueDate, startDate,description,  endDate,issue } = req.body;
       const checkExisting = await Task.findOne({ name });
       if (checkExisting) {
         return res
@@ -18,13 +19,13 @@ export const TaskService = {
           .json({ msg: "Task with that name already exists" });
       } else {
         const user = req.user as UserType;
-        let projects;
-        if(project){
-          projects =await  Project.findById(project)
-
-        }
-        if (!projects) {
-          return res.status(400).json({ msg: "Project not found" });
+        const issueId = req.params.issueId;
+     
+         let issue =await  Issue.findById(issueId)
+       
+        
+        if (!issue) {
+          return res.status(400).json({ msg: "Issue not found" });
         }
        
         let task = await Task.create({
@@ -34,9 +35,10 @@ export const TaskService = {
           status: Status.NOTSTARTED,
           dueDate,
           description,
+          assignedTo:user?._id,
           priority: Ipriority.LOW,
           user: user?._id,
-          project: project?._id,
+          issue: issue?._id,
         });
         let result = await task.save();
 
@@ -56,8 +58,8 @@ export const TaskService = {
       const user = req.user as UserType;
 
       const result = await Task.find({
-        assignedTo: mongoose.Types.ObjectId(user._id),
-      }).populate("assignedTo", "-password")
+        assignedTo: mongoose.Types.ObjectId(user?._id),
+      }).populate("-password")
       .sort({ createdAt: -1 });
       console.log(result);
       if (result)
@@ -80,7 +82,7 @@ export const TaskService = {
         const result = await Task.find({})
           .populate("assignedTo", "-password")
           .populate("user")
-          .populate('project')
+          .populate('Issue')
           .sort({ createdAt: -1 })
           .exec();
         if (result)
