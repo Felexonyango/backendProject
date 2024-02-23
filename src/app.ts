@@ -69,6 +69,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.get('/', (req, res) => {
+  return res.json("Welcome to Ticket management  API" ); 
+}); 
 
 app.use("/api/auth", authRoutes);
 app.use('/api/project',projectRoutes)
