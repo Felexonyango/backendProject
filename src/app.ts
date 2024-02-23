@@ -39,8 +39,6 @@ app.use((req:Request, res:Response, next:NextFunction) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
-  res.setHeader("Content-Security-Policy", "default-src 'none'; style-src 'self' https://cdnjs.cloudflare.com");
-
  
   next();
 });
